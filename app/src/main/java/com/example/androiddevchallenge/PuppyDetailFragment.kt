@@ -5,7 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.Button
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
+import androidx.compose.material.TopAppBar
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.ComposeView
 import androidx.navigation.fragment.navArgs
 
@@ -41,7 +48,25 @@ class PuppyDetailFragment : Fragment() {
             )
 
             setContent {
-                Text(selectedPuppy.name)
+                Scaffold (
+                    topBar = {
+                        TopAppBar(
+                            title = {
+                                Text(
+                                    text = selectedPuppy.name,
+                                    style = MaterialTheme.typography.subtitle1)
+                            }
+                        )
+                    },
+                    content = {
+                        Column {
+                            Text(text = selectedPuppy.description)
+                            Button(onClick = {  }, modifier = Modifier.fillMaxWidth()) {
+                                Text(text = "Adopt!")
+                            }
+                        }
+                    }
+                )
             }
         }
     }
