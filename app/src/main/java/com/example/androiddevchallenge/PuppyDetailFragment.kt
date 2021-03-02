@@ -5,18 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.navArgs
 
@@ -42,6 +46,16 @@ class PuppyDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        val imageName = selectedPuppy.pic
+        val packageName = requireContext().packageName
+        val resourceId =
+            requireContext().resources.getIdentifier(
+                imageName,
+                "drawable",
+                packageName
+            )
+        val resourceIdToUse = if (resourceId == 0) { R.drawable.ic_baseline_broken_image} else resourceId
+
         // Inflate the layout for this fragment
         return ComposeView(layoutInflater.context).apply {
             id = R.id.puppyDetailFragment
@@ -64,6 +78,12 @@ class PuppyDetailFragment : Fragment() {
                     },
                     content = {
                         Column(modifier = Modifier.padding(16.dp)) {
+                            Image(
+                                painter = painterResource(id = resourceIdToUse),
+                                contentDescription = selectedPuppy.name,
+                                modifier = Modifier.size(320.dp, 240.dp)
+                                    .clip(MaterialTheme.shapes.medium))
+                            Spacer(modifier = Modifier.height(16.dp))
                             Text(text = selectedPuppy.description)
                             Spacer(modifier = Modifier.height(16.dp))
                             Button(onClick = {  }, modifier = Modifier.fillMaxWidth()) {
