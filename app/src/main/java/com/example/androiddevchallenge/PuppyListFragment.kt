@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
@@ -21,6 +22,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.navigation.fragment.findNavController
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
@@ -74,7 +76,7 @@ class PuppyListFragment : Fragment() {
 
     @Composable
     fun PuppyList(puppies: List<PuppyModel>, handleClick: (String) -> Unit) {
-        LazyColumn(modifier = Modifier) {
+        LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
             items(items = puppies) { puppy ->
                 Puppy(name = puppy.name, handleClick = {
                     handleClick(puppy.id)
@@ -85,12 +87,12 @@ class PuppyListFragment : Fragment() {
 
     @Composable
     fun Puppy(name: String, handleClick: () -> Unit) {
-        Row(modifier = Modifier.clickable(onClick = { handleClick() })
+        Row(modifier = Modifier.clickable(onClick = { handleClick() }).padding(16.dp)
                 // makes entire row width clickable
                 .fillMaxWidth()) {
             Text(text = name)
         }
-        Divider(color = Color.Black)
+        Divider(color = Color.LightGray)
     }
 
     @Preview("Light Theme", widthDp = 360, heightDp = 640)
