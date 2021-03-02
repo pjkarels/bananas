@@ -57,6 +57,7 @@ class PuppyListFragment : Fragment() {
         LazyColumn(modifier = Modifier) {
             items(items = puppies) { puppy ->
                 Puppy(name = puppy.name, handleClick = {
+                    // todo: seems to be a bug where [FragmentName]Directions class is not getting generated
                     findNavController().navigate(R.id.puppyDetailFragment, Bundle().apply {
                         putString("puppyId", puppy.id)
                     })
