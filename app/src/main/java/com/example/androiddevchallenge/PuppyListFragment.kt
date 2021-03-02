@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Divider
@@ -57,7 +56,7 @@ class PuppyListFragment : Fragment() {
                         )
                     },
                     content = {
-                        PuppyListScreen(puppies = createPuppies(), handleClick = { id ->
+                        PuppyListScreen(puppies = PuppyDatabase.puppiesList, handleClick = { id ->
                             viewDetail(id)
                         })
                     }
@@ -98,7 +97,7 @@ class PuppyListFragment : Fragment() {
     @Composable
     fun LightPreview() {
         MyTheme {
-            PuppyListScreen(createPuppies(), handleClick = { id ->
+            PuppyListScreen(PuppyDatabase.puppiesList, handleClick = { id ->
                 viewDetail(id)
             })
         }
@@ -108,7 +107,7 @@ class PuppyListFragment : Fragment() {
     @Composable
     fun DarkPreview() {
         MyTheme(darkTheme = true) {
-            PuppyListScreen(createPuppies(), handleClick = { id ->
+            PuppyListScreen(PuppyDatabase.puppiesList, handleClick = { id ->
                 viewDetail(id)
             })
         }
@@ -119,17 +118,5 @@ class PuppyListFragment : Fragment() {
         findNavController().navigate(R.id.puppyDetailFragment, Bundle().apply {
             putString("puppyId", puppyId)
         })
-    }
-
-    private fun createPuppies(): List<PuppyModel> {
-        val puppies = mutableListOf<PuppyModel>()
-
-        puppies.add(PuppyModel("1", "Sunny"))
-        puppies.add(PuppyModel("2", "Cici"))
-        puppies.add(PuppyModel("3", "Francesca"))
-        puppies.add(PuppyModel("4", "Isabel"))
-        puppies.add(PuppyModel("5", "Daisy"))
-
-        return puppies
     }
 }

@@ -16,11 +16,15 @@ import androidx.navigation.fragment.navArgs
 class PuppyDetailFragment : Fragment() {
 
     var puppyId: String = ""
+    lateinit var selectedPuppy: PuppyModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         puppyId = arguments?.getString("puppyId", "") ?: ""
+        selectedPuppy = PuppyDatabase.puppiesList.first { puppy ->
+            puppyId == puppy.id
+        }
     }
 
     override fun onCreateView(
@@ -37,7 +41,7 @@ class PuppyDetailFragment : Fragment() {
             )
 
             setContent {
-                Text(puppyId)
+                Text(selectedPuppy.name)
             }
         }
     }
