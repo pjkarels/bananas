@@ -1,7 +1,21 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +36,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.fragment.navArgs
+import androidx.fragment.app.Fragment
 
 /**
  * A simple [Fragment] subclass.
@@ -43,7 +57,8 @@ class PuppyDetailFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         val imageName = selectedPuppy.pic
@@ -54,7 +69,7 @@ class PuppyDetailFragment : Fragment() {
                 "drawable",
                 packageName
             )
-        val resourceIdToUse = if (resourceId == 0) { R.drawable.ic_baseline_broken_image} else resourceId
+        val resourceIdToUse = if (resourceId == 0) { R.drawable.ic_baseline_broken_image } else resourceId
 
         // Inflate the layout for this fragment
         return ComposeView(layoutInflater.context).apply {
@@ -66,13 +81,14 @@ class PuppyDetailFragment : Fragment() {
             )
 
             setContent {
-                Scaffold (
+                Scaffold(
                     topBar = {
                         TopAppBar(
                             title = {
                                 Text(
                                     text = selectedPuppy.name,
-                                    style = MaterialTheme.typography.subtitle1)
+                                    style = MaterialTheme.typography.subtitle1
+                                )
                             }
                         )
                     },
@@ -82,11 +98,12 @@ class PuppyDetailFragment : Fragment() {
                                 painter = painterResource(id = resourceIdToUse),
                                 contentDescription = selectedPuppy.name,
                                 modifier = Modifier.size(320.dp, 240.dp)
-                                    .clip(MaterialTheme.shapes.medium))
+                                    .clip(MaterialTheme.shapes.medium)
+                            )
                             Spacer(modifier = Modifier.height(16.dp))
                             Text(text = selectedPuppy.description)
                             Spacer(modifier = Modifier.height(16.dp))
-                            Button(onClick = {  }, modifier = Modifier.fillMaxWidth()) {
+                            Button(onClick = { }, modifier = Modifier.fillMaxWidth()) {
                                 Text(text = "Adopt!")
                             }
                         }

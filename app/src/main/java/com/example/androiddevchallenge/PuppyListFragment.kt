@@ -1,7 +1,21 @@
+/*
+ * Copyright 2021 The Android Open Source Project
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     https://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.example.androiddevchallenge
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.example.androiddevchallenge.ui.theme.MyTheme
 
@@ -33,7 +48,8 @@ import com.example.androiddevchallenge.ui.theme.MyTheme
 class PuppyListFragment : Fragment() {
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
@@ -46,7 +62,7 @@ class PuppyListFragment : Fragment() {
             )
 
             setContent {
-                Scaffold (
+                Scaffold(
                     topBar = {
                         TopAppBar(
                             title = {
@@ -58,9 +74,12 @@ class PuppyListFragment : Fragment() {
                         )
                     },
                     content = {
-                        PuppyListScreen(puppies = PuppyDatabase.puppiesList, handleClick = { id ->
-                            viewDetail(id)
-                        })
+                        PuppyListScreen(
+                            puppies = PuppyDatabase.puppiesList,
+                            handleClick = { id ->
+                                viewDetail(id)
+                            }
+                        )
                     }
                 )
             }
@@ -78,18 +97,23 @@ class PuppyListFragment : Fragment() {
     fun PuppyList(puppies: List<PuppyModel>, handleClick: (String) -> Unit) {
         LazyColumn(modifier = Modifier.padding(horizontal = 16.dp)) {
             items(items = puppies) { puppy ->
-                Puppy(name = puppy.name, handleClick = {
-                    handleClick(puppy.id)
-                })
+                Puppy(
+                    name = puppy.name,
+                    handleClick = {
+                        handleClick(puppy.id)
+                    }
+                )
             }
         }
     }
 
     @Composable
     fun Puppy(name: String, handleClick: () -> Unit) {
-        Row(modifier = Modifier.clickable(onClick = { handleClick() }).padding(16.dp)
+        Row(
+            modifier = Modifier.clickable(onClick = { handleClick() }).padding(16.dp)
                 // makes entire row width clickable
-                .fillMaxWidth()) {
+                .fillMaxWidth()
+        ) {
             Text(text = name)
         }
         Divider(color = Color.LightGray)
@@ -99,9 +123,12 @@ class PuppyListFragment : Fragment() {
     @Composable
     fun LightPreview() {
         MyTheme {
-            PuppyListScreen(PuppyDatabase.puppiesList, handleClick = { id ->
-                viewDetail(id)
-            })
+            PuppyListScreen(
+                PuppyDatabase.puppiesList,
+                handleClick = { id ->
+                    viewDetail(id)
+                }
+            )
         }
     }
 
@@ -109,16 +136,22 @@ class PuppyListFragment : Fragment() {
     @Composable
     fun DarkPreview() {
         MyTheme(darkTheme = true) {
-            PuppyListScreen(PuppyDatabase.puppiesList, handleClick = { id ->
-                viewDetail(id)
-            })
+            PuppyListScreen(
+                PuppyDatabase.puppiesList,
+                handleClick = { id ->
+                    viewDetail(id)
+                }
+            )
         }
     }
 
     private fun viewDetail(puppyId: String) {
         // fixme: seems to be a bug where [FragmentName]Directions class is not getting generated
-        findNavController().navigate(R.id.puppyDetailFragment, Bundle().apply {
-            putString("puppyId", puppyId)
-        })
+        findNavController().navigate(
+            R.id.puppyDetailFragment,
+            Bundle().apply {
+                putString("puppyId", puppyId)
+            }
+        )
     }
 }
